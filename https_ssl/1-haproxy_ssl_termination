@@ -1,0 +1,18 @@
+global
+    tune.ssl.default-dh-param 2048
+
+defaults
+    mode http
+    timeout client 15s
+    timeout connect 10s
+    timeout server 15s
+    timeout http-request 10s
+
+frontend https_front
+    bind *:443 ssl crt /etc/letsencrypt/live/www.all-sarah.tech/fullchain.pem key /etc/letsencrypt/live/www.all-sarah.tech/privkey.pem
+    default_backend http_back
+
+backend clickviral-tech-backend
+    balance roundrobin
+    server 6342-web-01 34.204.44.250:80 check
+    server 6342-web-02 34.234.75.159:80 chec
